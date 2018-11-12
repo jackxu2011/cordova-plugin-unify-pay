@@ -1,0 +1,34 @@
+{
+  "name": "cordova-plugin-unify-pay",
+  "version": "1.0.0",
+  "description": "Unify pay for cordova app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "cordova": {
+    "id": "cordova-plugin-unify-pay",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yccp/cordova-plugin-payments-uniondocpay.git"
+  },
+  "keywords": [
+    "cordova",
+    "unionpay",
+    "qmf",
+    "unifypay",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "bugs": {
+    "url": "https://github.com/jackxu2011/cordova-plugin-unify-pay/issues"
+  },
+  "homepage": "https://github.com/jackxu2011/cordova-plugin-unify-pay#readme"
+}

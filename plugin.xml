@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-unify-pay" version="1.0.0">
+  <name>Unifypay</name>
+  <description>Cordova Plugin for unify pay</description>
+  <license>MIT</license>
+  <keywords>cordova, unionpay, qmf, unifypay</keywords>
+
+  <!-- add this to your config.xml -->
+  <!-- <preference name="WECHATAPPID" value="YOUR_WECHAT_APP_ID_HERE" /> -->
+  <preference name="WECHATAPPID"  default=""/>
+
+  <!-- <preference name="ALIPAYAPPID" value="YOUR_ALIPAY_APP_ID_HERE" /> -->
+  <preference name="ALIPAYAPPID" default=""/>
+
+  <!-- js module-->
+  <js-module src="www/Unifypay.js" name="Unifypay">
+    <clobbers target="Unifypay" />
+  </js-module>
+
+  <dependency id="cordova-plugin-cocoapod-support"/>
+
+  <!-- ios -->
+  <platform name="ios">
+    
+    <config-file target="config.xml" parent="/*">
+      <feature name="Unifypay">
+        <param name="ios-package" value="Unifypay" />
+        <param name="onload" value="true" />
+      </feature>
+      <preference name="WECHATAPPID" value="$WECHATAPPID"/>
+      <preference name="ALIPAYAPPID" value="$ALIPAYAPPID"/>
+    </config-file>
+    <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+      <array>
+        <string>weixin</string>
+        <string>wechat</string>
+        <string>alipays</string>
+      </array>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+      <dict>
+          <key>NSAllowsArbitraryLoads</key>
+          <true/>
+      </dict>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+      <array>
+        <dict>
+          <key>CFBundleURLName</key>
+          <string>weixin</string>
+          <key>CFBundleURLSchemes</key>
+          <array>
+            <string>$WECHATAPPID</string>
+          </array>
+        </dict>
+      </array>
+    </config-file>
+
+    <!-- plugin source code -->
+    <header-file src="src/ios/Unifypay.h" />
+    <source-file src="src/ios/Unifypay.m" />
+
+    <!-- Wechat Official -->
+    <pods-config ios-min-version="9.0" use-frameworks="true">
+      <source url="https://github.com/CocoaPods/Specs.git"/>
+    </pods-config>
+    <pod name="WeChat_SDK" />
+    <pod name="AlipaySDK-iOS"/>
+
+    <!-- unify pay libs -->
+    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayFastPay.h" />
+    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayOrder.h" />
+    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayPosPay.h" />
+    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayPluginSettings.h" />
+    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayUnifyPayPlugin.h" />
+    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayVersionsInfo.h" />
+		<source-file src="src/ios/libs/libUMSPosPayOnly.a" framework="true" />
+    <resource-file src="src/ios/libs/PosPay_Resource.bundle" />
+    <resource-file src="src/ios/libs/UMSSecKeyboardLibResource.bundle" />
+    
+  </platform>
+
+  <!-- android -->
+  <platform name="android">
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="Unifypay">
+        <param name="android-package" value="com.linkcld.cordova.plugin.Uniondocpay"/>
+        <param name="onload" value="true" />
+      </feature>
+      <preference name="WECHATAPPID" value="$WECHATAPPID"/>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <uses-permission android:name="android.permission.INTERNET"/>
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+      <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+      <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <meta-data android:name="PPPaySDK" android:value="true"/>
+      <activity
+        android:name=".wxapi.WXEntryActivity"
+        android:label="@string/launcher_name"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <data android:scheme="$WECHATAPPID"/>
+        </intent-filter>
+      </activity>
+      <activity
+        android:name=".wxapi.WXPayEntryActivity"
+        android:label="@string/launcher_name"
+        android:exported="true"
+        android:launchMode="singleTop">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <data android:scheme="$WECHATAPPID"/>
+        </intent-filter>
+      </activity>
+    </config-file>
+
+    <framework src="src/android/Unifypay.gradle" custom="true" type="gradleReference" />
+    <source-file src="src/android/Unifypay.java" target-dir="src/com/linkcld/cordova/plugin" />
+		<source-file src="src/android/libs/qmf-ppplugin-android-3.0.3.aar" target-dir="libs" />
+    <source-file src="src/android/libs/alipaySdk-15.5.7-20181023110917.aar" target-dir="libs" />
+  </platform>
+</plugin>
