@@ -7,9 +7,9 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile(name: 'qmf-ppplugin-android-3.0.3', ext: 'aar')
-    compile(name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
-    compile 'com.android.support:multidex:1.0.0'
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+  implementation(name: 'qmf-ppplugin-android-3.0.3', ext: 'aar')
+  implementation(name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
+  implementation 'com.android.support:multidex:1.0.0'
+  implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }

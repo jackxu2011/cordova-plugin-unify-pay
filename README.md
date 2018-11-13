@@ -10,11 +10,8 @@
 ## 安装
 
 ```
-cordova plugin add cordova-plugin-unify-pay --save
-```
-或
-```
-ionic cordova plugin add cordova-plugin-unify-pay
+cordova plugin add cordova-plugin-unify-pay --variable ALIPAYAPPID=[your alipay appId] --variable WECHATAPPID=[your wechat appId]
+cordova plugin add https://github.com/jackxu2011/cordova-plugin-unify-pay.git --variable ALIPAYAPPID=[your alipay appId] --variable WECHATAPPID=[your wechat appId]
 ```
 
 ionic 3 在import之后

@@ -11,8 +11,10 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mm.opensdk.modelbiz.ChooseCardFromWXCardPackage;
 
+import com.chinaums.pppay.unify.UnifyPayPlugin;
 import com.chinaums.pppay.unify.WXPayResultListener;
 
 import org.apache.cordova.CallbackContext;
@@ -35,14 +37,14 @@ public class EntryActivity extends Activity implements IWXAPIEventHandler {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        IWXAPI api = Unifypay.getWxAPI(this);
+        IWXAPI api = WXAPIFactory.createWXAPI(this, UnifyPayPlugin.getInstance(this).getAppId());
 
         if (api == null) {
             startMainActivity();
         } else {
             api.handleIntent(getIntent(), this);
         }
-        setListener(Unifypay.getWXListener());
+        setListener(UnifyPayPlugin.getInstance(this).getWXListener());
     }
 
     @Override
@@ -51,14 +53,14 @@ public class EntryActivity extends Activity implements IWXAPIEventHandler {
 
         setIntent(intent);
 
-        IWXAPI api = Unifypay.getWxAPI(this);
+        IWXAPI api = WXAPIFactory.createWXAPI(this, UnifyPayPlugin.getInstance(this).getAppId());
         if (api == null) {
             startMainActivity();
         } else {
             api.handleIntent(intent, this);
         }
 
-        setListener(Unifypay.getWXListener());
+        setListener(UnifyPayPlugin.getInstance(this).getWXListener());
     }
 
     @Override
@@ -72,7 +74,7 @@ public class EntryActivity extends Activity implements IWXAPIEventHandler {
             return ;
         }
 
-        if(ConstantsAPI.COMMAND_PAY_BY_WX.equals(resp.getType())) {
+        if(ConstantsAPI.COMMAND_PAY_BY_WX == resp.getType()) {
             if(mListener != null){
                 mListener.onResponse(this, resp);
             }

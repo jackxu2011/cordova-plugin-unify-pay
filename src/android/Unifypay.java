@@ -1,19 +1,16 @@
-package com.linkcld.cordova.plugin;
+package com.linkcld.cordova;
 
 import android.util.Log;
 
-import org.apache.cordova.*;
-import org.json.JSONArray;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaArgs;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.chinaums.pppay.unify.UnifyPayListener;
 import com.chinaums.pppay.unify.UnifyPayPlugin;
 import com.chinaums.pppay.unify.UnifyPayRequest;
-import com.chinaums.pppay.unify.WXPayResultListener;
-
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 
 public class Unifypay extends CordovaPlugin implements UnifyPayListener {
@@ -30,16 +27,19 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
     public static final String ERROR_WECHAT_RESPONSE_UNKNOWN = "未知错误";
 
     protected static CallbackContext currentCallbackContext;
-    protected static IWXAPI wxApi;
 
     @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
+    protected void pluginInitialize() {
+
+        super.pluginInitialize();
+
         UnifyPayPlugin.getInstance(cordova.getActivity()).setListener(this);
+
+        Log.d(TAG, "plugin initialized.");
     }
 
     @Override
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, CordovaArgs args, final CallbackContext callbackContext) throws JSONException {
         Log.i(TAG, "Execute:" + action + " with :" + args.toString());
         
         if(action.equals("pay")) {
@@ -62,9 +62,7 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
         } catch (Exception e) {
             Log.i(TAG, e.getMessage());
             callbackContext.error("参数错误");
-            return true;
         }
-
         return true;
     }
 
@@ -72,21 +70,10 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
     public void onResult(String resultCode, String resultInfo) {
         Log.i(TAG, resultInfo);
         if(UnifyPayListener.ERR_OK.equals(resultCode)) {
-            getCurrentCallbackContext().success()
+            getCurrentCallbackContext().success();
         } else {
             getCurrentCallbackContext().error(resultInfo);
         }
-    }
-
-    public static IWXAPI getWxAPI(Context ctx) {
-        if (wxApi == null) {
-            wxApi = WXAPIFactory.createWXAPI(ctx, UnifyPayPlugin.getInstance(cordova.getActivity()).getAppId(), true);
-        }
-        return wxApi;
-    }
-
-    public static WXPayResultListener getWXListener() {
-        return UnifyPayPlugin.getInstance(cordova.getActivity()).getWXListener();
     }
 
     public static CallbackContext getCurrentCallbackContext() {
@@ -94,9 +81,6 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
     }
 
     private void sendNoResultPluginResult(CallbackContext callbackContext) {
-        // save current callback context
-        currentCallbackContext = callbackContext;
-
         // send no result and keep callback
         PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
         result.setKeepCallback(true);

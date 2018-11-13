@@ -85,12 +85,18 @@
   <!-- android -->
   <platform name="android">
 
+    <hook type="after_plugin_add" src="scripts/android-install.js" />
+    <hook type="after_plugin_install" src="scripts/android-install.js" />
+    <hook type="before_plugin_rm" src="scripts/android-install.js" />
+    <hook type="before_plugin_uninstall" src="scripts/android-install.js" />
+
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="Unifypay">
-        <param name="android-package" value="com.linkcld.cordova.plugin.Uniondocpay"/>
+        <param name="android-package" value="com.linkcld.cordova.Unifypay"/>
         <param name="onload" value="true" />
       </feature>
       <preference name="WECHATAPPID" value="$WECHATAPPID"/>
+      <preference name="ALIPAYAPPID" value="$ALIPAYAPPID"/>
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/*">
@@ -102,7 +108,6 @@
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
-      <meta-data android:name="PPPaySDK" android:value="true"/>
       <activity
         android:name=".wxapi.WXEntryActivity"
         android:label="@string/launcher_name"
@@ -127,7 +132,20 @@
     </config-file>
 
     <framework src="src/android/Unifypay.gradle" custom="true" type="gradleReference" />
-    <source-file src="src/android/Unifypay.java" target-dir="src/com/linkcld/cordova/plugin" />
+    <source-file src="src/android/Unifypay.java" target-dir="src/com/linkcld/cordova" />
+    <resource-file src="src/android/libs/armeabi/liblocSDK7b.so" target="jniLibs/armeabi/liblocSDK7b.so"/>
+    <resource-file src="src/android/libs/armeabi/libindoor.so" target="jniLibs/armeabi/libindoor.so"/>
+    <resource-file src="src/android/libs/armeabi-v7a/liblocSDK7b.so" target="jniLibs/armeabi-v7a/liblocSDK7b.so"/>
+    <resource-file src="src/android/libs/armeabi-v7a/libindoor.so" target="jniLibs/armeabi-v7a/libindoor.so"/>
+    <resource-file src="src/android/libs/arm64-v8a/liblocSDK7b.so" target="jniLibs/arm64-v8a/liblocSDK7b.so"/>
+    <resource-file src="src/android/libs/arm64-v8a/libindoor.so" target="jniLibs/arm64-v8a/libindoor.so"/>
+    <resource-file src="src/android/libs/x86/liblocSDK7b.so" target="jniLibs/x86/liblocSDK7b.so"/>
+    <resource-file src="src/android/libs/x86/libindoor.so" target="jniLibs/x86/libindoor.so"/>
+    <resource-file src="src/android/libs/x86_64/liblocSDK7b.so" target="jniLibs/x86_64/liblocSDK7b.so"/>
+    <resource-file src="src/android/libs/x86_64/libindoor.so" target="jniLibs/x86_64/libindoor.so"/>
+    <lib-file src="src/android/libs/UPPayAssistEx.jar"/>
+    <lib-file src="src/android/libs/UPPayPluginExPro.jar"/>
+    <lib-file src="src/android/libs/BaiduLBS_Android.jar"/>
 		<lib-file src="src/android/libs/qmf-ppplugin-android-3.0.3.aar"/>
     <lib-file src="src/android/libs/alipaySdk-15.5.7-20181023110917.aar"/>
   </platform>
