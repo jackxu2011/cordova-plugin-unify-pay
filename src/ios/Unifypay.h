@@ -1,7 +1,8 @@
 #import <Cordova/CDVPlugin.h>
 #import "WXApi.h"
+#import "WXApiObject.h"
 
-@interface Unifypay : CDVPlugin
+@interface Unifypay:CDVPlugin <WXApiDelegate>
 
 @property (nonatomic, strong) NSString *currentCallbackId;
 @property (nonatomic, strong) NSString *wechatAppId;

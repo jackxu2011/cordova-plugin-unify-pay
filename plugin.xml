@@ -66,19 +66,24 @@
     <pods-config ios-min-version="9.0" use-frameworks="true">
       <source url="https://github.com/CocoaPods/Specs.git"/>
     </pods-config>
+
     <pod name="WeChat_SDK" />
     <pod name="AlipaySDK-iOS"/>
 
-    <!-- unify pay libs -->
-    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayFastPay.h" />
-    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayOrder.h" />
-    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayPosPay.h" />
-    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayPluginSettings.h" />
-    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayUnifyPayPlugin.h" />
-    <header-file src="src/ios/libs/include/UMSPosPayOnly/UMSPPPayVersionsInfo.h" />
-		<source-file src="src/ios/libs/libUMSPosPayOnly.a" framework="true" />
-    <resource-file src="src/ios/libs/PosPay_Resource.bundle" />
-    <resource-file src="src/ios/libs/UMSSecKeyboardLibResource.bundle" />
+    <!-- ums pay libs -->
+    <header-file src="src/ios/libs/Chinaums/include/UMSPosPayOnly/UMSPPPayFastPay.h" />
+    <header-file src="src/ios/libs/Chinaums/include/UMSPosPayOnly/UMSPPPayOrder.h" />
+    <header-file src="src/ios/libs/Chinaums/include/UMSPosPayOnly/UMSPPPayPosPay.h" />
+    <header-file src="src/ios/libs/Chinaums/include/UMSPosPayOnly/UMSPPPayPluginSettings.h" />
+    <header-file src="src/ios/libs/Chinaums/include/UMSPosPayOnly/UMSPPPayUnifyPayPlugin.h" />
+    <header-file src="src/ios/libs/Chinaums/include/UMSPosPayOnly/UMSPPPayVersionsInfo.h" />
+    <source-file src="src/ios/libs/Chinaums/libUMSPosPayOnly.a" framework="true" />
+    <resource-file src="src/ios/libs/Chinaums/PosPay_Resource.bundle" />
+    <resource-file src="src/ios/libs/Chinaums/UMSSecKeyboardLibResource.bundle" />
+
+    <!-- uppay -->
+    <header-file src="src/ios/libs/UPPaymentControl/UPPaymentControl.h"/>
+    <source-file src="src/ios/libs/UPPaymentControl/libPaymentControl.a" framework="true" />
     
   </platform>
 
@@ -133,6 +138,7 @@
 
     <framework src="src/android/Unifypay.gradle" custom="true" type="gradleReference" />
     <source-file src="src/android/Unifypay.java" target-dir="src/com/linkcld/cordova" />
+    <!-- baidu 地图 -->
     <resource-file src="src/android/libs/armeabi/liblocSDK7b.so" target="jniLibs/armeabi/liblocSDK7b.so"/>
     <resource-file src="src/android/libs/armeabi/libindoor.so" target="jniLibs/armeabi/libindoor.so"/>
     <resource-file src="src/android/libs/armeabi-v7a/liblocSDK7b.so" target="jniLibs/armeabi-v7a/liblocSDK7b.so"/>
@@ -143,9 +149,13 @@
     <resource-file src="src/android/libs/x86/libindoor.so" target="jniLibs/x86/libindoor.so"/>
     <resource-file src="src/android/libs/x86_64/liblocSDK7b.so" target="jniLibs/x86_64/liblocSDK7b.so"/>
     <resource-file src="src/android/libs/x86_64/libindoor.so" target="jniLibs/x86_64/libindoor.so"/>
+    <lib-file src="src/android/libs/BaiduLBS_Android.jar"/>
+
+    <!-- up pay -->
     <lib-file src="src/android/libs/UPPayAssistEx.jar"/>
     <lib-file src="src/android/libs/UPPayPluginExPro.jar"/>
-    <lib-file src="src/android/libs/BaiduLBS_Android.jar"/>
+    
+    <!-- ums pay libs -->
 		<lib-file src="src/android/libs/qmf-ppplugin-android-3.0.3.aar"/>
     <lib-file src="src/android/libs/alipaySdk-15.5.7-20181023110917.aar"/>
   </platform>
