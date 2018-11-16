@@ -23,7 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import com.linkcld.cordova.plugin.Unifypay;
+import com.linkcld.cordova.Unifypay;
 
 public class EntryActivity extends Activity implements IWXAPIEventHandler {
 
