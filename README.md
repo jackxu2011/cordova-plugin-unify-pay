@@ -33,7 +33,7 @@ declare let Unifypay;
 ```js
 Unifypay.pay(
   Unifypay.channel.ALIPAY, // 通道
-  '{"msgType":"trade.precreate","connectSys":"ALIPAY","msgSrc":"WWW.TEST.COM","merName":"仲晶晶二维码测试","mid":"898340149000005","msgId":"3194","appPayRequest":{"qrCode":"https://qr.alipay.com/bax0254776flwtwg8l6w203d"},"settleRefId":"00255100548N","tid":"88880001","srcReserve":"test001","totalAmount":1,"qrCode":"https://qr.alipay.com/bax0254776flwtwg8l6w203d","targetMid":"2015061000120322","responseTimestamp":"2018-06-25 21:18:02","errCode":"SUCCESS","targetStatus":"10000","seqId":"00255100548N","merOrderId":"3194676990","status":"NEW_ORDER","targetSys":"Alipay 2.0","sign":"E880CB77904BEC754AA508DD16AD88B5"}', //支付字符串，从银联下单结果中获取
+  '{"qrCode":"https://qr.alipay.com/bax0254776flwtwg8l6w203d"}', //支付字符串，从银联下单结果中的appPayRequest
   () => {
     console.log('成功');
   }, 
