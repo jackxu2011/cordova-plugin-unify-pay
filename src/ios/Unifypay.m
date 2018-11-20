@@ -16,8 +16,9 @@
     self.currentCallbackId = command.callbackId;
     // check arguments
     NSString *channel = [command.arguments objectAtIndex:0];
-    NSString *payData = [command.arguments objectAtIndex:1];
-    if (!channel)
+    NSString *payData = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:[command.arguments objectAtIndex:1] options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+    
+    if (!channel || !payData)
     {
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"参数格式错误"] callbackId:self.currentCallbackId];
         return ;
@@ -33,13 +34,11 @@
         
         CDVPluginResult* pluginResult;
         
-        NSDictionary *resultDic = @{@"resultCode": resultCode,@"resultInfo": resultInfo};
-        
         if ([resultCode  isEqual: @"0000"]) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDic];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
         } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:resultDic];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: resultInfo];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
         }
     }];

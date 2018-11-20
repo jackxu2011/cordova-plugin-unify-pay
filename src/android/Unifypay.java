@@ -119,12 +119,12 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
                         }
                     }
                     try {
-                        String channel = args.getString(0);
+                        String channel = getChannel(args.getString(0));
                         String payData = args.getString(1);
-//                        if(!isAlipayInstalled(cordova.getActivity())) {
-//                            callbackContext.error("未安装支付宝");
-//                            return;
-//                        }
+                        if(channel == null || payData == null) {
+                            callbackContext.error("参数错误");
+                            return;
+                        }
                         sendPaymentRequest(channel, payData, callbackContext);
                     } catch (JSONException e) {
                         Log.i(TAG, e.getMessage());
@@ -139,16 +139,11 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
 
     protected void sendPaymentRequest(String channel, String payData, CallbackContext callbackContext) {
         currentCallbackContext = callbackContext;
-        channel = getChannel(channel);
-        if(channel != null)  {
-            UnifyPayRequest msg = new UnifyPayRequest();
-            msg.payChannel = UnifyPayRequest.CHANNEL_ALIPAY;
-            msg.payData = payData;
-            UnifyPayPlugin.getInstance(cordova.getActivity()).sendPayRequest(msg);
-            sendNoResultPluginResult(callbackContext);
-        } else {
-            callbackContext.error("参数错误");
-        }
+        UnifyPayRequest msg = new UnifyPayRequest();
+        msg.payChannel = UnifyPayRequest.CHANNEL_ALIPAY;
+        msg.payData = payData;
+        UnifyPayPlugin.getInstance(cordova.getActivity()).sendPayRequest(msg);
+        sendNoResultPluginResult(callbackContext);
     }
 
     private String getChannel(String channel) {
