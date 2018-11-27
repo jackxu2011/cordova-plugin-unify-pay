@@ -27,6 +27,15 @@
     "cordova-ios",
     "cordova-android"
   ],
+  "engines": {
+    "cordovaDependencies": {
+      "1.0.0": {
+        "cordova": ">=7.1.0",
+        "cordova-android": ">=7.0.0",
+        "cordova-ios": ">=4.3.0"
+      }
+    }
+  },
   "bugs": {
     "url": "https://github.com/jackxu2011/cordova-plugin-unify-pay/issues"
   },

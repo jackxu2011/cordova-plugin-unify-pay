@@ -12,13 +12,17 @@
   <!-- <preference name="ALIPAYAPPID" value="YOUR_ALIPAY_APP_ID_HERE" /> -->
   <preference name="ALIPAYAPPID" default=""/>
 
+  <engines>
+    <engine name="cordova" version=">=7.1.0" />
+    <engine name="cordova-android" version=">=7.0.0" />
+    <engine name="cordova-ios" version=">=4.3.0" />
+  </engines>
+
   <!-- js module-->
   <js-module src="www/Unifypay.js" name="Unifypay">
     <clobbers target="Unifypay" />
   </js-module>
-
-  <dependency id="cordova-plugin-cocoapod-support"/>
-
+  
   <!-- ios -->
   <platform name="ios">
     
@@ -62,13 +66,9 @@
     <header-file src="src/ios/Unifypay.h" />
     <source-file src="src/ios/Unifypay.m" />
 
-    <!-- Wechat Official -->
-    <pods-config ios-min-version="9.0" use-frameworks="true">
-      <source url="https://github.com/CocoaPods/Specs.git"/>
-    </pods-config>
-
-    <pod name="WechatOpenSDK" />
-    <pod name="AlipaySDK-iOS"/>
+    <!-- Wechat and alipay Official -->
+    <framework src="WechatOpenSDK" type="podspec" spec=""/>
+    <framework src="AlipaySDK-iOS" type="podspec" spec=""/>
 
     <!-- ums pay libs -->
     <header-file src="src/ios/libs/Chinaums/include/UMSPosPayOnly/UMSPPPayFastPay.h" />
