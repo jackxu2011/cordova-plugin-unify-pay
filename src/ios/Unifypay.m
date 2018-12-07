@@ -6,10 +6,8 @@
 #pragma mark "API"
 - (void)pluginInitialize
 {
-    self.wechatAppId = [[self.commandDelegate settings] objectForKey:@"wechatappid"];
     self.alipayAppId = [[self.commandDelegate settings] objectForKey:@"alipayappid"];
-    [WXApi registerApp: self.wechatAppId];
-    NSLog(@"cordova-plugin-unify-pay has been initialized. Weixin SDK Version: %@. APP_ID: %@.", [WXApi getApiVersion], self.wechatAppId);
+    NSLog(@"cordova-plugin-unify-pay has been initialized.");
 }
 
 - (void)pay:(CDVInvokedUrlCommand *)command {
@@ -21,6 +19,11 @@
     if (!channel || !payData)
     {
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"参数格式错误"] callbackId:self.currentCallbackId];
+        return ;
+    }
+
+    if ([channel isEqual: CHANNEL_WEIXIN]) {
+        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"本插件不支付微信，请使用微信插件支付"] callbackId:self.currentCallbackId];
         return ;
     }
     
@@ -42,18 +45,6 @@
             [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
         }
     }];
-}
-
-#pragma mark "CDVPlugin Overrides"
-
-- (void)handleOpenURL:(NSNotification *)notification
-{
-    NSURL* url = [notification object];
-    
-    if ([url isKindOfClass:[NSURL class]] && [url.scheme isEqualToString:self.wechatAppId])
-    {
-        [UMSPPPayUnifyPayPlugin handleOpenURL:url];
-    }
 }
 
 @end
