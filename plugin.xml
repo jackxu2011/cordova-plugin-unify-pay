@@ -44,19 +44,6 @@
       </dict>
     </config-file>
 
-    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
-      <array>
-        <dict>
-          <key>CFBundleURLName</key>
-          <string>weixin</string>
-          <key>CFBundleURLSchemes</key>
-          <array>
-            <string>$WECHATAPPID</string>
-          </array>
-        </dict>
-      </array>
-    </config-file>
-
     <!-- plugin source code -->
     <header-file src="src/ios/Unifypay.h" />
     <source-file src="src/ios/Unifypay.m" />
