@@ -48,3 +48,6 @@ fabric.properties
 .DS_Store
 *.sublime-project
 *.sublime-workspace
+
+# vscode
+.vscode/
