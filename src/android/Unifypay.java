@@ -140,7 +140,7 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
     protected void sendPaymentRequest(String channel, String payData, CallbackContext callbackContext) {
         currentCallbackContext = callbackContext;
         UnifyPayRequest msg = new UnifyPayRequest();
-        msg.payChannel = UnifyPayRequest.CHANNEL_ALIPAY;
+        msg.payChannel = channel;
         msg.payData = payData;
         UnifyPayPlugin.getInstance(cordova.getActivity()).sendPayRequest(msg);
         sendNoResultPluginResult(callbackContext);
