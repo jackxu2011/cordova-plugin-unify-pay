@@ -1,12 +1,10 @@
 #import <Cordova/CDVPlugin.h>
-#import "WXApi.h"
-#import "WXApiObject.h"
 
-@interface Unifypay:CDVPlugin <WXApiDelegate>
+@interface Unifypay:CDVPlugin
 
 @property (nonatomic, strong) NSString *currentCallbackId;
-@property (nonatomic, strong) NSString *wechatAppId;
 @property (nonatomic, strong) NSString *alipayAppId;
+@property (nonatomic, strong) NSString *uppayAppId;
 
 - (void)pay:(CDVInvokedUrlCommand *)command;
 

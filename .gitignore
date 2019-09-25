@@ -49,4 +49,6 @@ fabric.properties
 *.sublime-project
 *.sublime-workspace
 
+
+# vscode
 .vscode/

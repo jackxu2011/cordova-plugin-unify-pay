@@ -4,6 +4,7 @@
 
 module.exports = {
   channel: {
+    UPPAY: '00',
     WEIXIN: '01',
     ALIPAY: '02',
     UMSPAY: '03'

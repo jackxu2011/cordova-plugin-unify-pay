@@ -4,14 +4,21 @@
 
 ## 通道
 - 支付定支付(Alipay)
-- 微信支付(Wechatpay)
-- 银联全渠道(Uac) (暂时不支持)
+- 微信支付(Wechatpay) (不支付，从代码上看，微信支付可以直接用微信支付插件，不需要在本插件中实现，微信还有分享等功能也依赖于微信sdk不想重复开发。等与银联联调后可证实是否可行)
+- 银联全渠道(Uac)
 
 ## 安装
 
+首先安装 cordova-plugin-wechat
+
 ```
-cordova plugin add cordova-plugin-unify-pay --variable ALIPAYAPPID=[your alipay appId] --variable WECHATAPPID=[your wechat appId]
-cordova plugin add https://github.com/jackxu2011/cordova-plugin-unify-pay.git --variable ALIPAYAPPID=[your alipay appId] --variable WECHATAPPID=[your wechat appId]
+cordova plugin add cordova-plugin-wechat  --variable wechatappid=YOUR_WECHAT_APPID
+```
+
+再安装本插件
+```
+cordova plugin add cordova-plugin-unify-pay --variable ALIPAYAPPID=[your alipay appId] --variable UPPAYAPPID=[your uppay appId]
+cordova plugin add https://github.com/jackxu2011/cordova-plugin-unify-pay.git --variable ALIPAYAPPID=[your alipay appId]
 ```
 
 ionic 3 在import之后
@@ -22,9 +29,10 @@ declare let Unifypay;
 
 ```js
   channel: {
-    WEIXIN: '01',
-    ALIPAY: '02',
-    UMSPAY: '03'
+    UPPAY: '00',   //云闪付
+    WEIXIN: '01',  //微信--微信直接通过微信直接插件发起支付
+    ALIPAY: '02',  //支付宝
+    UMSPAY: '03'  //银商钱包
   }
 ```
 

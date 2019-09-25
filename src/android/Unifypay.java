@@ -34,6 +34,10 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
 
     public static final String ERROR_PERMISSION_DENIED_ERROR = "权限请求被拒绝";
 
+    public static final String SEND_PAY_REQUEST = "支付请求已发送";
+
+    public static final String UP_PAY = "00";
+
     /**
      * 安卓6以上动态权限相关
      */
@@ -101,6 +105,21 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
         Log.i(TAG, "Execute:" + action + " with :" + args.toString());
         
         if(action.equals("pay")) {
+            try{
+                String channel = getChannel(args.getString(0));
+                if(channel == null) {
+                    callbackContext.error("参数错误");
+                    return true;
+                }
+                if(channel.equals(UnifyPayRequest.CHANNEL_WEIXIN)) {
+                    callbackContext.error("本插件不支付微信，请使用微信插件支付");
+                    return true;
+                }
+            } catch (JSONException e) {
+                Log.i(TAG, e.getMessage());
+                callbackContext.error("参数错误");
+                return true;
+            }
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     if(!hasPermissions()) {
@@ -118,7 +137,7 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
                             getCurrentCallbackContext().error(e.getMessage());
                         }
                     }
-                    try {
+                    try{
                         String channel = getChannel(args.getString(0));
                         String payData = args.getString(1);
                         if(channel == null || payData == null) {
@@ -139,10 +158,24 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
 
     protected void sendPaymentRequest(String channel, String payData, CallbackContext callbackContext) {
         currentCallbackContext = callbackContext;
-        UnifyPayRequest msg = new UnifyPayRequest();
-        msg.payChannel = channel;
-        msg.payData = payData;
-        UnifyPayPlugin.getInstance(cordova.getActivity()).sendPayRequest(msg);
+        if(channel.equals(UP_PAY)) {
+            String tn = "";
+            try {
+                JSONObject e = new JSONObject(payData);
+                tn = e.getString("tn");
+            } catch (JSONException e1) {
+                Log.i(TAG, e1.getMessage());
+                callbackContext.error("参数错误");
+                return;
+            }
+            UPPayAssistEx.startPay (cordova.getActivity(), null, null, tn, UP_PAY);
+        } else {
+            UnifyPayRequest msg = new UnifyPayRequest();
+            msg.payChannel = channel;
+            msg.payData = payData;
+            UnifyPayPlugin.getInstance(cordova.getActivity()).sendPayRequest(msg);
+        }
+        
         sendNoResultPluginResult(callbackContext);
     }
 
@@ -151,6 +184,7 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
             case UnifyPayRequest.CHANNEL_ALIPAY: return UnifyPayRequest.CHANNEL_ALIPAY;
             case UnifyPayRequest.CHANNEL_WEIXIN: return UnifyPayRequest.CHANNEL_WEIXIN;
             case UnifyPayRequest.CHANNEL_UMSPAY: return UnifyPayRequest.CHANNEL_UMSPAY;
+            case UP_PAY: return UP_PAY;
             default: return null;
         }
     }
@@ -159,10 +193,11 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
     public void onResult(String resultCode, String resultInfo) {
         Log.i(TAG, resultInfo);
         if(UnifyPayListener.ERR_OK.equals(resultCode)) {
-            getCurrentCallbackContext().success();
+            currentCallbackContext.success();
         } else {
-            getCurrentCallbackContext().error(resultInfo);
+            currentCallbackContext.error(resultInfo);
         }
+        currentCallbackContext = null;
     }
 
     public static CallbackContext getCurrentCallbackContext() {
