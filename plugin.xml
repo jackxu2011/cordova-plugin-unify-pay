@@ -79,13 +79,13 @@
     <source-file src="src/ios/Unifypay.m" />
 
     <!-- ums pay libs -->
-    <header-file src="src/ios/libs/UMSPosPay/include/UMSPosPay/UMSPPPayFastPay.h" />
-    <header-file src="src/ios/libs/UMSPosPay/include/UMSPosPay/UMSPPPayOrder.h" />
-    <header-file src="src/ios/libs/UMSPosPay/include/UMSPosPay/UMSPPPayPosPay.h" />
-    <header-file src="src/ios/libs/UMSPosPay/include/UMSPosPay/UMSPPPayPluginSettings.h" />
-    <header-file src="src/ios/libs/UMSPosPay/include/UMSPosPay/UMSPPPayUnifyPayPlugin.h" />
-    <header-file src="src/ios/libs/UMSPosPay/include/UMSPosPay/UMSPPPayVersionsInfo.h" />
-    <source-file src="src/ios/libs/UMSPosPay/libUMSPosPay.a" framework="true" />
+    <header-file src="src/ios/libs/UMSPosPay/include/UMSPPPayFastPay.h" />
+    <header-file src="src/ios/libs/UMSPosPay/include/UMSPPPayOrder.h" />
+    <header-file src="src/ios/libs/UMSPosPay/include/UMSPPPayPosPay.h" />
+    <header-file src="src/ios/libs/UMSPosPay/include/UMSPPPayPluginSettings.h" />
+    <header-file src="src/ios/libs/UMSPosPay/include/UMSPPPayUnifyPayPlugin.h" />
+    <header-file src="src/ios/libs/UMSPosPay/include/UMSPPPayVersionsInfo.h" />
+    <source-file src="src/ios/libs/UMSPosPay/libUMSPosPayOnly.a" framework="true" />
     <resource-file src="src/ios/libs/UMSPosPay/PosPay_Resource.bundle" />
     <resource-file src="src/ios/libs/UMSPosPay/UMSSecKeyboardLibResource.bundle" />
 
