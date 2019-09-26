@@ -7,5 +7,6 @@
 @property (nonatomic, strong) NSString *uppayAppId;
 
 - (void)pay:(CDVInvokedUrlCommand *)command;
+- (void)isUppayAppInstalled:(CDVInvokedUrlCommand *)command;
 
 @end

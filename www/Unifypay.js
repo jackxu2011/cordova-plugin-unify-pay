@@ -12,5 +12,8 @@ module.exports = {
   //支付宝
   pay: function (channel, payData, onSuccess, onError) {
     cordova.exec(onSuccess, onError, "Unifypay", "pay", [channel, payData]);
+  },
+  isUppayAppInstalled: function(onSuccess, onError) {
+    cordova.exec(onSuccess, onError, "Unifypay", "isUppayAppInstalled", [channel, payData]);
   }
 };

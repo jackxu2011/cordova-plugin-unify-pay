@@ -38,6 +38,8 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
 
     public static final String UP_PAY = "00";
 
+    public static final String UP_PAY_MODE = "00";
+
     /**
      * 安卓6以上动态权限相关
      */
@@ -103,7 +105,13 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
     @Override
     public boolean execute(String action, CordovaArgs args, final CallbackContext callbackContext) {
         Log.i(TAG, "Execute:" + action + " with :" + args.toString());
-        
+
+        if(action.equals("isUppayAppInstalled")) {
+
+            isUppayAppInstalled(callbackContext);
+
+            return true;
+        }
         if(action.equals("pay")) {
             try{
                 String channel = getChannel(args.getString(0));
@@ -156,6 +164,10 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
         return false;
     }
 
+    private void isUppayAppInstalled(CallbackContext callbackContext) {
+        callbackContext.success(UPPayAssistEx.UPPayAssistEx(cordova.getActivity()));
+    }
+
     protected void sendPaymentRequest(String channel, String payData, CallbackContext callbackContext) {
         currentCallbackContext = callbackContext;
         if(channel.equals(UP_PAY)) {
@@ -168,7 +180,7 @@ public class Unifypay extends CordovaPlugin implements UnifyPayListener {
                 callbackContext.error("参数错误");
                 return;
             }
-            UPPayAssistEx.startPay (cordova.getActivity(), null, null, tn, UP_PAY);
+            UPPayAssistEx.startPay (cordova.getActivity(), null, null, tn, UP_PAY_MODE);
         } else {
             UnifyPayRequest msg = new UnifyPayRequest();
             msg.payChannel = channel;

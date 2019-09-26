@@ -31,13 +31,19 @@
     }
     
     [self sendPaymentRequest: channel payData: payData];
-    
+
+}
+
+- (void)isUppayAppInstalled:(CDVInvokedUrlCommand *)command {
+    self.currentCallbackId = command.callbackId;
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:[[UPPaymentControl defaultControl] isPaymentAppInstalled]]
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
 }
 
 - (void) sendPaymentRequest: (NSString *) channel payData: (NSDictionary *) payData{
     CDVPluginResult* pluginResult;
 
-    if(channel isEqual: CHANNEL_CLOUDPAY) {
+    if(channel isEqual:@"00") {
         if([[UPPaymentControl defaultControl] startPay:payData[@"tn"] fromScheme:self.uppayAppId mode:@"00" viewController:self.viewController]) {
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
