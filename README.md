@@ -37,6 +37,7 @@ declare let Unifypay;
 ```
 
 ## 使用方法
+
 >打开支付页面
 ```js
 Unifypay.pay(
@@ -47,6 +48,15 @@ Unifypay.pay(
   }, 
   e => {
     console.error(e);
+  });
+
+```
+
+>是否安装云闪付
+```js
+Unifypay.isUppayAppInstalled(
+  (installed) => {
+    console.log(installed);
   });
 
 ```

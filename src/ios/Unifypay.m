@@ -17,7 +17,7 @@
     // check arguments
     NSString *channel = [command.arguments objectAtIndex:0];
 
-    NSDictionary *payData = [command.arguments objectAtIndex:1];
+    NSString *payData = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:[command.arguments objectAtIndex:1] options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
     
     if (!channel || !payData)
     {
@@ -40,19 +40,22 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
 }
 
-- (void) sendPaymentRequest: (NSString *) channel payData: (NSDictionary *) payData{
+- (void) sendPaymentRequest: (NSString *) channel payData: (NSString *) payData{
     CDVPluginResult* pluginResult;
 
     if(channel isEqual:@"00") {
-        if([[UPPaymentControl defaultControl] startPay:payData[@"tn"] fromScheme:self.uppayAppId mode:@"00" viewController:self.viewController]) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
-        } else {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: @"调起云闪付失败"];
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
-        }
+        [UMSPPPayUnifyPayPlugin cloudPayWithURLSchemes: self.uppayAppId payData:payData
+                callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
+            if ([resultCode  isEqual: @"0000"]) {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
+            } else {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: resultInfo];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:self.currentCallbackId];
+            }
+        }];
     } else {
-        [UMSPPPayUnifyPayPlugin payWithPayChannel:channel payData:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:payData options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding] 
+        [UMSPPPayUnifyPayPlugin payWithPayChannel:channel payData:payData
                 callbackBlock:^(NSString *resultCode, NSString *resultInfo) {
             if ([resultCode  isEqual: @"0000"]) {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"ok"];
@@ -63,8 +66,18 @@
             }
         }];
     }
-    
+}
 
+#pragma mark "CDVPlugin Overrides"
+
+- (void)handleOpenURL:(NSNotification *)notification
+{
+    NSURL* url = [notification object];
+
+    if ([url isKindOfClass:[NSURL class]] && [url.scheme isEqualToString:self.uppayAppId])
+    {
+        [UMSPPPayUnifyPayPlugin cloudPayHandleOpenURL:url];
+    }
     
 }
 
