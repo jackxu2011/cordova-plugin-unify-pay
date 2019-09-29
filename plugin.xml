@@ -133,15 +133,15 @@
     <resource-file src="src/android/libs/assets/data.bin" target="assets/data.bin"/>
 
     <!-- baidu 地图 -->
-    <resource-file src="src/android/libs/armeabi/liblocSDK7b.so" target="jniLibs/armeabi/liblocSDK7b.so"/>
+    <resource-file src="src/android/libs/armeabi/liblocSDK7a.so" target="jniLibs/armeabi/liblocSDK7a.so"/>
     <resource-file src="src/android/libs/armeabi/libentryexpro.so" target="jniLibs/armeabi/libentryexpro.so"/>
     <resource-file src="src/android/libs/armeabi/libuptsmaddon.so" target="jniLibs/armeabi/libuptsmaddon.so"/>
     <resource-file src="src/android/libs/armeabi/libuptsmaddonmi.so" target="jniLibs/armeabi/libuptsmaddonmi.so"/>
-    <resource-file src="src/android/libs/armeabi-v7a/liblocSDK7b.so" target="jniLibs/armeabi-v7a/liblocSDK7b.so"/>
+    <resource-file src="src/android/libs/armeabi-v7a/liblocSDK7a.so" target="jniLibs/armeabi-v7a/liblocSDK7a.so"/>
     <resource-file src="src/android/libs/armeabi-v7a/libentryexpro.so" target="jniLibs/armeabi-v7a/libentryexpro.so"/>
     <resource-file src="src/android/libs/armeabi-v7a/libuptsmaddon.so" target="jniLibs/armeabi-v7a/libuptsmaddon.so"/>
     <resource-file src="src/android/libs/armeabi-v7a/libuptsmaddonmi.so" target="jniLibs/armeabi-v7a/libuptsmaddonmi.so"/>
-    <resource-file src="src/android/libs/arm64-v8a/liblocSDK7b.so" target="jniLibs/arm64-v8a/liblocSDK7b.so"/>
+    <resource-file src="src/android/libs/arm64-v8a/liblocSDK7a.so" target="jniLibs/arm64-v8a/liblocSDK7a.so"/>
     <resource-file src="src/android/libs/arm64-v8a/libentryexpro.so" target="jniLibs/arm64-v8a/libentryexpro.so"/>
     <resource-file src="src/android/libs/arm64-v8a/libuptsmaddon.so" target="jniLibs/arm64-v8a/libuptsmaddon.so"/>
     <resource-file src="src/android/libs/arm64-v8a/libuptsmaddonmi.so" target="jniLibs/arm64-v8a/libuptsmaddonmi.so"/>
