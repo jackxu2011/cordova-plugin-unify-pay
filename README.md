@@ -16,9 +16,13 @@ cordova plugin add cordova-plugin-wechat  --variable wechatappid=YOUR_WECHAT_APP
 ```
 
 再安装本插件
+uppayappid的值可以把wechatappid的前两位改为up
+
 ```
-cordova plugin add cordova-plugin-unify-pay --variable ALIPAYAPPID=[your alipay appId] --variable UPPAYAPPID=[your uppay appId]
-cordova plugin add https://github.com/jackxu2011/cordova-plugin-unify-pay.git --variable ALIPAYAPPID=[your alipay appId]
+//本方式暂时不支付，因为没有发布
+cordova plugin add cordova-plugin-unify-pay --variable UPPAYAPPID=[your uppay appId]
+
+cordova plugin add https://github.com/jackxu2011/cordova-plugin-unify-pay.git --variable UPPAYAPPID=[your uppay appId]
 ```
 
 ionic 3 在import之后

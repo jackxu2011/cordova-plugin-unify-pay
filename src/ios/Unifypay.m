@@ -7,7 +7,6 @@
 #pragma mark "API"
 - (void)pluginInitialize
 {
-    self.alipayAppId = [[self.commandDelegate settings] objectForKey:@"alipayappid"];
     self.uppayAppId = [[self.commandDelegate settings] objectForKey:@"uppayappId"];
     NSLog(@"cordova-plugin-unify-pay has been initialized.");
 }
